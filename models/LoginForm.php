@@ -29,7 +29,7 @@ class LoginForm extends Model
 {
     use ModuleTrait;
 
-    /** @var string User's email or username */
+    /** @var string User's email */
     public $login;
 
     /** @var string User's plain password */
@@ -75,9 +75,9 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'login'      => Yii::t('user', 'Login'),
-            'password'   => Yii::t('user', 'Password'),
-            'rememberMe' => Yii::t('user', 'Remember me next time'),
+            'login'      => Yii::t('app', 'Login'),
+            'password'   => Yii::t('app', 'Password'),
+            'rememberMe' => Yii::t('app', 'Remember me next time'),
         ];
     }
 
@@ -165,7 +165,7 @@ class LoginForm extends Model
     public function beforeValidate()
     {
         if (parent::beforeValidate()) {
-            $this->user = $this->finder->findUserByUsernameOrEmail(trim($this->login));
+            $this->user = $this->finder->findUserByEmail(trim($this->login));
 
             return true;
         } else {

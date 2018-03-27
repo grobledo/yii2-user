@@ -129,22 +129,6 @@ class Finder extends BaseObject
     }
 
     /**
-     * Finds a user by the given username or email.
-     *
-     * @param string $usernameOrEmail Username or email to be used on search.
-     *
-     * @return models\User
-     */
-    public function findUserByUsernameOrEmail($usernameOrEmail)
-    {
-        if (filter_var($usernameOrEmail, FILTER_VALIDATE_EMAIL)) {
-            return $this->findUserByEmail($usernameOrEmail);
-        }
-
-        return $this->findUserByUsername($usernameOrEmail);
-    }
-
-    /**
      * Finds a user by the given condition.
      *
      * @param mixed $condition Condition to be used on search.

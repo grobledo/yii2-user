@@ -33,6 +33,8 @@ use yii\helpers\ArrayHelper;
  *
  * Database fields:
  * @property integer $id
+ * @property string  $firstname
+ * @property string  $lastname
  * @property string  $username
  * @property string  $email
  * @property string  $unconfirmed_email
@@ -187,14 +189,16 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'username'          => \Yii::t('user', 'Username'),
-            'email'             => \Yii::t('user', 'Email'),
-            'registration_ip'   => \Yii::t('user', 'Registration ip'),
-            'unconfirmed_email' => \Yii::t('user', 'New email'),
-            'password'          => \Yii::t('user', 'Password'),
-            'created_at'        => \Yii::t('user', 'Registration time'),
-            'last_login_at'     => \Yii::t('user', 'Last login'),
-            'confirmed_at'      => \Yii::t('user', 'Confirmation time'),
+            'username'          => \Yii::t('app', 'Username'),
+            'firstname'          => \Yii::t('app', 'Fistname'),
+            'lastname'          => \Yii::t('app', 'Lastname'),
+            'email'             => \Yii::t('app', 'Email'),
+            'registration_ip'   => \Yii::t('app', 'Registration ip'),
+            'unconfirmed_email' => \Yii::t('app', 'New email'),
+            'password'          => \Yii::t('app', 'Password'),
+            'created_at'        => \Yii::t('app', 'Registration time'),
+            'last_login_at'     => \Yii::t('app', 'Last login'),
+            'confirmed_at'      => \Yii::t('app', 'Confirmation time'),
         ];
     }
 
@@ -223,16 +227,15 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            // username rules
-            'usernameTrim'     => ['username', 'trim'],
-            'usernameRequired' => ['username', 'required', 'on' => ['register', 'create', 'connect', 'update']],
-            'usernameMatch'    => ['username', 'match', 'pattern' => static::$usernameRegexp],
-            'usernameLength'   => ['username', 'string', 'min' => 3, 'max' => 255],
-            'usernameUnique'   => [
-                'username',
-                'unique',
-                'message' => \Yii::t('user', 'This username has already been taken')
-            ],
+            // firstname rules
+            'firstnameTrim'     => ['firstname', 'trim'],
+            'firstnameRequired' => ['firstname', 'required', 'on' => ['register', 'create', 'connect', 'update']],
+            'firstnameLength'   => ['firstname', 'string', 'min' => 3, 'max' => 255],
+
+            // lastname rules
+            'lastnameTrim'     => ['lastname', 'trim'],
+            'lastnameRequired' => ['lastname', 'required', 'on' => ['register', 'create', 'connect', 'update']],
+            'lastnameLength'   => ['lastname', 'string', 'min' => 3, 'max' => 255],
 
             // email rules
             'emailTrim'     => ['email', 'trim'],

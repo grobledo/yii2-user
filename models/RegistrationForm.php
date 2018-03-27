@@ -29,9 +29,14 @@ class RegistrationForm extends Model
     public $email;
 
     /**
-     * @var string Username
+     * @var string Firstname
      */
-    public $username;
+    public $firstname;
+
+    /**
+     * @var string Lastname
+     */
+    public $lastname;
 
     /**
      * @var string Password
@@ -46,17 +51,16 @@ class RegistrationForm extends Model
         $user = $this->module->modelMap['User'];
 
         return [
-            // username rules
-            'usernameTrim'     => ['username', 'trim'],
-            'usernameLength'   => ['username', 'string', 'min' => 3, 'max' => 255],
-            'usernamePattern'  => ['username', 'match', 'pattern' => $user::$usernameRegexp],
-            'usernameRequired' => ['username', 'required'],
-            'usernameUnique'   => [
-                'username',
-                'unique',
-                'targetClass' => $user,
-                'message' => Yii::t('user', 'This username has already been taken')
-            ],
+            // firstname rules
+            'firstnameTrim'     => ['firstname', 'trim'],
+            'firstnameRequired' => ['firstname', 'required', 'on' => ['register', 'create', 'connect', 'update']],
+            'firstnameLength'   => ['firstname', 'string', 'min' => 3, 'max' => 255],
+
+            // lastname rules
+            'lastnameTrim'     => ['lastname', 'trim'],
+            'lastnameRequired' => ['lastname', 'required', 'on' => ['register', 'create', 'connect', 'update']],
+            'lastnameLength'   => ['lastname', 'string', 'min' => 3, 'max' => 255],
+
             // email rules
             'emailTrim'     => ['email', 'trim'],
             'emailRequired' => ['email', 'required'],
@@ -79,9 +83,10 @@ class RegistrationForm extends Model
     public function attributeLabels()
     {
         return [
-            'email'    => Yii::t('user', 'Email'),
-            'username' => Yii::t('user', 'Username'),
-            'password' => Yii::t('user', 'Password'),
+            'email'    => Yii::t('app', 'Email'),
+            'firstname' => Yii::t('app', 'Firstname'),
+            'lastname' => Yii::t('app', 'Lastname'),
+            'password' => Yii::t('app', 'Password'),
         ];
     }
 
