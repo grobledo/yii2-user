@@ -13,7 +13,7 @@ use yii\bootstrap\Nav;
 
 /**
  * @var \yii\web\View $this
- * @var \dektrium\user\models\User $user
+ * @var \grobledo\user\models\User $user
  * @var string $content
  */
 

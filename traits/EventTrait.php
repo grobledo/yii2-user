@@ -9,19 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace dektrium\user\traits;
+namespace grobledo\user\traits;
 
-use dektrium\user\events\AuthEvent;
-use dektrium\user\events\ConnectEvent;
-use dektrium\user\events\FormEvent;
-use dektrium\user\events\ProfileEvent;
-use dektrium\user\events\ResetPasswordEvent;
-use dektrium\user\events\UserEvent;
-use dektrium\user\models\Account;
-use dektrium\user\models\Profile;
-use dektrium\user\models\RecoveryForm;
-use dektrium\user\models\Token;
-use dektrium\user\models\User;
+use grobledo\user\events\AuthEvent;
+use grobledo\user\events\ConnectEvent;
+use grobledo\user\events\FormEvent;
+use grobledo\user\events\ProfileEvent;
+use grobledo\user\events\ResetPasswordEvent;
+use grobledo\user\events\UserEvent;
+use grobledo\user\models\Account;
+use grobledo\user\models\Profile;
+use grobledo\user\models\RecoveryForm;
+use grobledo\user\models\Token;
+use grobledo\user\models\User;
 use yii\authclient\ClientInterface;
 use yii\base\Model;
 

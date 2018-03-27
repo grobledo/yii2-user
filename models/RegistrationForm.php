@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace dektrium\user\models;
+namespace grobledo\user\models;
 
-use dektrium\user\traits\ModuleTrait;
+use grobledo\user\traits\ModuleTrait;
 use Yii;
 use yii\base\Model;
 

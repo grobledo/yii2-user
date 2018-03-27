@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace dektrium\user\events;
+namespace grobledo\user\events;
 
-use dektrium\user\models\Account;
+use grobledo\user\models\Account;
 use yii\authclient\ClientInterface;
 use yii\base\Event;
 

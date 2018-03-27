@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-use dektrium\rbac\widgets\Assignments;
+use grobledo\rbac\widgets\Assignments;
 
 /**
  * @var yii\web\View $this
- * @var dektrium\user\models\User $user
+ * @var grobledo\user\models\User $user
  */
 ?>
 

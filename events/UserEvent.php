@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace dektrium\user\events;
+namespace grobledo\user\events;
 
-use dektrium\user\models\User;
+use grobledo\user\models\User;
 use yii\base\Event;
 
 /**

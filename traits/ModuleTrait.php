@@ -1,14 +1,14 @@
 <?php
 
-namespace dektrium\user\traits;
+namespace grobledo\user\traits;
 
-use dektrium\user\Module;
+use grobledo\user\Module;
 
 /**
  * Trait ModuleTrait
  *
  * @property-read Module $module
- * @package dektrium\user\traits
+ * @package grobledo\user\traits
  */
 trait ModuleTrait
 {

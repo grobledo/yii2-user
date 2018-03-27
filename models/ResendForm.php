@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace dektrium\user\models;
+namespace grobledo\user\models;
 
-use dektrium\user\Finder;
-use dektrium\user\Mailer;
+use grobledo\user\Finder;
+use grobledo\user\Mailer;
 use yii\base\Model;
 
 /**

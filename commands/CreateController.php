@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace dektrium\user\commands;
+namespace grobledo\user\commands;
 
-use dektrium\user\models\User;
+use grobledo\user\models\User;
 use Yii;
 use yii\console\Controller;
 use yii\helpers\Console;
@@ -19,7 +19,7 @@ use yii\helpers\Console;
 /**
  * Creates new user account.
  *
- * @property \dektrium\user\Module $module
+ * @property \grobledo\user\Module $module
  *
  * @author Dmitry Erofeev <dmeroff@gmail.com>
  */

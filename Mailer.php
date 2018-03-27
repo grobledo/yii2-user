@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace dektrium\user;
+namespace grobledo\user;
 
-use dektrium\user\models\Token;
-use dektrium\user\models\User;
+use grobledo\user\models\Token;
+use grobledo\user\models\User;
 use Yii;
 use yii\base\Component;
 
@@ -47,7 +47,7 @@ class Mailer extends Component
     /** @var string */
     protected $recoverySubject;
 
-    /** @var \dektrium\user\Module */
+    /** @var \grobledo\user\Module */
     protected $module;
 
     /**

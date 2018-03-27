@@ -14,8 +14,8 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var dektrium\user\models\User $user
- * @var dektrium\user\models\Profile $profile
+ * @var grobledo\user\models\User $user
+ * @var grobledo\user\models\Profile $profile
  */
 ?>
 

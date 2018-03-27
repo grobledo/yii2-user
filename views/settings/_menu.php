@@ -10,10 +10,10 @@
  */
 
 use yii\helpers\Html;
-use dektrium\user\widgets\UserMenu;
+use grobledo\user\widgets\UserMenu;
 
 /**
- * @var dektrium\user\models\User $user
+ * @var grobledo\user\models\User $user
  */
 
 $user = Yii::$app->user->identity;

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace dektrium\user\widgets;
+namespace grobledo\user\widgets;
 
-use dektrium\user\models\LoginForm;
+use grobledo\user\models\LoginForm;
 use yii\base\Widget;
 
 /**

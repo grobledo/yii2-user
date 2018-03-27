@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace dektrium\user\commands;
+namespace grobledo\user\commands;
 
-use dektrium\user\Finder;
+use grobledo\user\Finder;
 use Yii;
 use yii\console\Controller;
 use yii\helpers\Console;
@@ -19,7 +19,7 @@ use yii\helpers\Console;
 /**
  * Confirms a user.
  *
- * @property \dektrium\user\Module $module
+ * @property \grobledo\user\Module $module
  *
  * @author Dmitry Erofeev <dmeroff@gmail.com>
  */

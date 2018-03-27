@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace dektrium\user\events;
+namespace grobledo\user\events;
 
-use dektrium\user\models\RecoveryForm;
-use dektrium\user\models\Token;
+use grobledo\user\models\RecoveryForm;
+use grobledo\user\models\Token;
 use yii\base\Event;
 
 /**

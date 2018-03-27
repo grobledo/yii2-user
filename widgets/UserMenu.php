@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace dektrium\user\widgets;
+namespace grobledo\user\widgets;
 
 use yii\widgets\Menu;
 use Yii;
@@ -21,7 +21,7 @@ use yii\base\Widget;
 class UserMenu extends Widget
 {
     
-    /** @array \dektrium\user\models\RegistrationForm */
+    /** @array \grobledo\user\models\RegistrationForm */
     public $items;
     
     public function init()

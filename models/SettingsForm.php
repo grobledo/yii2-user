@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace dektrium\user\models;
+namespace grobledo\user\models;
 
-use dektrium\user\helpers\Password;
-use dektrium\user\Mailer;
-use dektrium\user\Module;
-use dektrium\user\traits\ModuleTrait;
+use grobledo\user\helpers\Password;
+use grobledo\user\Mailer;
+use grobledo\user\Module;
+use grobledo\user\traits\ModuleTrait;
 use Yii;
 use yii\base\Model;
 
