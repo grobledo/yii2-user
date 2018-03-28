@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Dektrium project.
+ * This file is part of the grobledo project.
  *
- * (c) Dektrium project <http://github.com/dektrium/>
+ * (c) grobledo project <http://github.com/grobledo/>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -33,7 +33,10 @@ class SettingsForm extends Model
     public $email;
 
     /** @var string */
-    public $username;
+    public $firstname;
+
+    /** @var string */
+    public $lastname;
 
     /** @var string */
     public $new_password;
@@ -62,7 +65,8 @@ class SettingsForm extends Model
     {
         $this->mailer = $mailer;
         $this->setAttributes([
-            'username' => $this->user->username,
+            'firstname' => $this->user->firstname,
+            'lastname' => $this->user->lastname,
             'email'    => $this->user->unconfirmed_email ?: $this->user->email,
         ], false);
         parent::__construct($config);
@@ -72,14 +76,20 @@ class SettingsForm extends Model
     public function rules()
     {
         return [
-            'usernameTrim' => ['username', 'trim'],
-            'usernameRequired' => ['username', 'required'],
-            'usernameLength'   => ['username', 'string', 'min' => 3, 'max' => 255],
-            'usernamePattern' => ['username', 'match', 'pattern' => '/^[-a-zA-Z0-9_\.@]+$/'],
+            // firstname rules
+            'firstnameTrim'     => ['firstname', 'trim'],
+            'firstnameRequired' => ['firstname', 'required', 'on' => ['register', 'create', 'connect', 'update']],
+            'firstnameLength'   => ['firstname', 'string', 'min' => 3, 'max' => 255],
+
+            // lastname rules
+            'lastnameTrim'     => ['lastname', 'trim'],
+            'lastnameRequired' => ['lastname', 'required', 'on' => ['register', 'create', 'connect', 'update']],
+            'lastnameLength'   => ['lastname', 'string', 'min' => 3, 'max' => 255],
+
             'emailTrim' => ['email', 'trim'],
             'emailRequired' => ['email', 'required'],
             'emailPattern' => ['email', 'email'],
-            'emailUsernameUnique' => [['email', 'username'], 'unique', 'when' => function ($model, $attribute) {
+            'emailUnique' => [['email'], 'unique', 'when' => function ($model, $attribute) {
                 return $this->user->$attribute != $model->$attribute;
             }, 'targetClass' => $this->module->modelMap['User']],
             'newPasswordLength' => ['new_password', 'string', 'max' => 72, 'min' => 6],
@@ -96,8 +106,9 @@ class SettingsForm extends Model
     public function attributeLabels()
     {
         return [
+            'firstname' => Yii::t('app', 'Firstname'),
+            'lastname' => Yii::t('app', 'Lastname'),
             'email'            => Yii::t('user', 'Email'),
-            'username'         => Yii::t('user', 'Username'),
             'new_password'     => Yii::t('user', 'New password'),
             'current_password' => Yii::t('user', 'Current password'),
         ];
@@ -118,7 +129,8 @@ class SettingsForm extends Model
     {
         if ($this->validate()) {
             $this->user->scenario = 'settings';
-            $this->user->username = $this->username;
+            $this->user->firstname = $this->firstname;
+            $this->user->lastname = $this->lastname;
             $this->user->password = $this->new_password;
             if ($this->email == $this->user->email && $this->user->unconfirmed_email != null) {
                 $this->user->unconfirmed_email = null;

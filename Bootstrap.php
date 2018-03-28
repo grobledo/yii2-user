@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Dektrium project.
+ * This file is part of the grobledo project.
  *
- * (c) Dektrium project <http://github.com/dektrium/>
+ * (c) grobledo project <http://github.com/grobledo/>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -29,7 +29,6 @@ class Bootstrap implements BootstrapInterface
     private $_modelMap = [
         'User'             => 'grobledo\user\models\User',
         'Account'          => 'grobledo\user\models\Account',
-        'Profile'          => 'grobledo\user\models\Profile',
         'Token'            => 'grobledo\user\models\Token',
         'RegistrationForm' => 'grobledo\user\models\RegistrationForm',
         'ResendForm'       => 'grobledo\user\models\ResendForm',
@@ -60,7 +59,6 @@ class Bootstrap implements BootstrapInterface
 
             Yii::$container->setSingleton(Finder::className(), [
                 'userQuery'    => Yii::$container->get('UserQuery'),
-                'profileQuery' => Yii::$container->get('ProfileQuery'),
                 'tokenQuery'   => Yii::$container->get('TokenQuery'),
                 'accountQuery' => Yii::$container->get('AccountQuery'),
             ]);

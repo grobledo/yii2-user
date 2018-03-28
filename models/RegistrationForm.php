@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Dektrium project.
+ * This file is part of the grobledo project.
  *
- * (c) Dektrium project <http://github.com/dektrium/>
+ * (c) grobledo project <http://github.com/grobledo/>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -83,9 +83,9 @@ class RegistrationForm extends Model
     public function attributeLabels()
     {
         return [
-            'email'    => Yii::t('app', 'Email'),
             'firstname' => Yii::t('app', 'Firstname'),
             'lastname' => Yii::t('app', 'Lastname'),
+            'email'    => Yii::t('app', 'Email'),
             'password' => Yii::t('app', 'Password'),
         ];
     }

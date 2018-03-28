@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Dektrium project.
+ * This file is part of the grobledo project.
  *
- * (c) Dektrium project <http://github.com/dektrium/>
+ * (c) grobledo project <http://github.com/grobledo/>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -33,9 +33,6 @@ class Finder extends BaseObject
     /** @var AccountQuery */
     protected $accountQuery;
 
-    /** @var ActiveQuery */
-    protected $profileQuery;
-
     /**
      * @return ActiveQuery
      */
@@ -60,14 +57,6 @@ class Finder extends BaseObject
         return $this->accountQuery;
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getProfileQuery()
-    {
-        return $this->profileQuery;
-    }
-
     /** @param ActiveQuery $accountQuery */
     public function setAccountQuery(ActiveQuery $accountQuery)
     {
@@ -84,12 +73,6 @@ class Finder extends BaseObject
     public function setTokenQuery(ActiveQuery $tokenQuery)
     {
         $this->tokenQuery = $tokenQuery;
-    }
-
-    /** @param ActiveQuery $profileQuery */
-    public function setProfileQuery(ActiveQuery $profileQuery)
-    {
-        $this->profileQuery = $profileQuery;
     }
 
     /**
@@ -190,27 +173,4 @@ class Finder extends BaseObject
         ])->one();
     }
 
-    /**
-     * Finds a profile by user id.
-     *
-     * @param int $id
-     *
-     * @return null|models\Profile
-     */
-    public function findProfileById($id)
-    {
-        return $this->findProfile(['user_id' => $id])->one();
-    }
-
-    /**
-     * Finds a profile.
-     *
-     * @param mixed $condition
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function findProfile($condition)
-    {
-        return $this->profileQuery->where($condition);
-    }
 }

@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Dektrium project
+ * This file is part of the grobledo project
  *
- * (c) Dektrium project <http://github.com/dektrium>
+ * (c) grobledo project <http://github.com/grobledo>
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -15,7 +15,7 @@
  */
 ?>
 
-<?php $this->beginContent('@dektrium/user/views/admin/update.php', ['user' => $user]) ?>
+<?php $this->beginContent('@grobledo/user/views/admin/update.php', ['user' => $user]) ?>
 
 <table class="table">
     <tr>

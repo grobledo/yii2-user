@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Dektrium project.
+ * This file is part of the grobledo project.
  *
- * (c) Dektrium project <http://github.com/dektrium>
+ * (c) grobledo project <http://github.com/grobledo>
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -15,6 +15,7 @@
  */
 ?>
 
+<?= $form->field($user, 'firstname')->textInput(['maxlength' => 255]) ?>
+<?= $form->field($user, 'lastname')->textInput(['maxlength' => 255]) ?>
 <?= $form->field($user, 'email')->textInput(['maxlength' => 255]) ?>
-<?= $form->field($user, 'username')->textInput(['maxlength' => 255]) ?>
 <?= $form->field($user, 'password')->passwordInput() ?>

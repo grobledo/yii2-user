@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Dektrium project.
+ * This file is part of the grobledo project.
  *
- * (c) Dektrium project <http://github.com/dektrium/>
+ * (c) grobledo project <http://github.com/grobledo/>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -135,11 +135,7 @@ class RegistrationController extends Controller
 
         if ($model->load(\Yii::$app->request->post()) && $model->register()) {
             $this->trigger(self::EVENT_AFTER_REGISTER, $event);
-
-            return $this->render('/message', [
-                'title'  => \Yii::t('user', 'Your account has been created'),
-                'module' => $this->module,
-            ]);
+            return $this->goHome();
         }
 
         return $this->render('register', [

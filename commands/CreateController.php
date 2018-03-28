@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Dektrium project.
+ * This file is part of the grobledo project.
  *
- * (c) Dektrium project <http://github.com/dektrium/>
+ * (c) grobledo project <http://github.com/grobledo/>
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -34,13 +34,14 @@ class CreateController extends Controller
      * @param string      $username Username
      * @param null|string $password Password (if null it will be generated automatically)
      */
-    public function actionIndex($email, $username, $password = null)
+    public function actionIndex($email, $firstname, $lastname, $password = null)
     {
         $user = Yii::createObject([
             'class'    => User::className(),
             'scenario' => 'create',
             'email'    => $email,
-            'username' => $username,
+            'firstname' => $firstname,
+            'lastname' => $lastname,
             'password' => $password,
         ]);
 

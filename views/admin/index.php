@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Dektrium project.
+ * This file is part of the grobledo project.
  *
- * (c) Dektrium project <http://github.com/dektrium>
+ * (c) grobledo project <http://github.com/grobledo>
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -26,8 +26,6 @@ $this->title = Yii::t('user', 'Manage users');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
-
 <?= $this->render('/admin/_menu') ?>
 
 <?php Pjax::begin() ?>
@@ -41,7 +39,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'attribute' => 'id',
             'headerOptions' => ['style' => 'width:90px;'], # 90px is sufficient for 5-digit user ids
         ],
-        'username',
+        'firstname',
+        'lastname',
         'email:email',
         [
             'attribute' => 'registration_ip',

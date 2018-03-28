@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Dektrium project.
+ * This file is part of the grobledo project.
  *
- * (c) Dektrium project <http://github.com/dektrium/>
+ * (c) grobledo project <http://github.com/grobledo/>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,7 +13,6 @@ namespace grobledo\user\controllers;
 
 use grobledo\user\filters\AccessRule;
 use grobledo\user\Finder;
-use grobledo\user\models\Profile;
 use grobledo\user\models\User;
 use grobledo\user\models\UserSearch;
 use grobledo\user\helpers\Password;
@@ -78,18 +77,6 @@ class AdminController extends Controller
      * Triggered with \grobledo\user\events\UserEvent.
      */
     const EVENT_AFTER_IMPERSONATE = 'afterImpersonate';
-
-    /**
-     * Event is triggered before updating existing user's profile.
-     * Triggered with \grobledo\user\events\UserEvent.
-     */
-    const EVENT_BEFORE_PROFILE_UPDATE = 'beforeProfileUpdate';
-
-    /**
-     * Event is triggered after updating existing user's profile.
-     * Triggered with \grobledo\user\events\UserEvent.
-     */
-    const EVENT_AFTER_PROFILE_UPDATE = 'afterProfileUpdate';
 
     /**
      * Event is triggered before confirming existing user.
@@ -270,41 +257,6 @@ class AdminController extends Controller
     }
 
     /**
-     * Updates an existing profile.
-     *
-     * @param int $id
-     *
-     * @return mixed
-     */
-    public function actionUpdateProfile($id)
-    {
-        Url::remember('', 'actions-redirect');
-        $user    = $this->findModel($id);
-        $profile = $user->profile;
-
-        if ($profile == null) {
-            $profile = \Yii::createObject(Profile::className());
-            $profile->link('user', $user);
-        }
-        $event = $this->getProfileEvent($profile);
-
-        $this->performAjaxValidation($profile);
-
-        $this->trigger(self::EVENT_BEFORE_PROFILE_UPDATE, $event);
-
-        if ($profile->load(\Yii::$app->request->post()) && $profile->save()) {
-            \Yii::$app->getSession()->setFlash('success', \Yii::t('user', 'Profile details have been updated'));
-            $this->trigger(self::EVENT_AFTER_PROFILE_UPDATE, $event);
-            return $this->refresh();
-        }
-
-        return $this->render('_profile', [
-            'user'    => $user,
-            'profile' => $profile,
-        ]);
-    }
-
-    /**
      * Shows information about user.
      *
      * @param int $id
@@ -361,7 +313,7 @@ class AdminController extends Controller
     }
 
     /**
-     * If "dektrium/yii2-rbac" extension is installed, this page displays form
+     * If "grobledo/yii2-rbac" extension is installed, this page displays form
      * where user can assign multiple auth items to user.
      *
      * @param int $id
@@ -371,7 +323,7 @@ class AdminController extends Controller
      */
     public function actionAssignments($id)
     {
-        if (!isset(\Yii::$app->extensions['dektrium/yii2-rbac'])) {
+        if (!isset(\Yii::$app->extensions['grobledo/yii2-rbac'])) {
             throw new NotFoundHttpException();
         }
         Url::remember('', 'actions-redirect');

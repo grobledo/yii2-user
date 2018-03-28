@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Dektrium project.
+ * This file is part of the grobledo project.
  *
- * (c) Dektrium project <http://github.com/dektrium>
+ * (c) grobledo project <http://github.com/grobledo>
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -21,8 +21,6 @@ use yii\widgets\ActiveForm;
 $this->title = Yii::t('user', 'Account settings');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
-<?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
 
 <div class="row">
     <div class="col-md-3">
@@ -47,7 +45,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'email') ?>
 
-                <?= $form->field($model, 'username') ?>
+                <?= $form->field($model, 'firstname') ?>
+
+                <?= $form->field($model, 'lastname') ?>
 
                 <?= $form->field($model, 'new_password')->passwordInput() ?>
 

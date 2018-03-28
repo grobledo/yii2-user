@@ -58,7 +58,7 @@ class User extends \grobledo\user\models\User
 
 ## Adding field to the admin form
 
-You should override view file `@dektrium/user/views/admin/_user.php` as described in [special guide](overriding-views.md)
+You should override view file `@grobledo/user/views/admin/_user.php` as described in [special guide](overriding-views.md)
 with the following content:
 
 ```php

@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Dektrium project.
+ * This file is part of the grobledo project.
  *
- * (c) Dektrium project <http://github.com/dektrium/>
+ * (c) grobledo project <http://github.com/grobledo/>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -50,7 +50,6 @@ use yii\helpers\ArrayHelper;
  *
  * Defined relations:
  * @property Account[] $accounts
- * @property Profile   $profile
  *
  * Dependencies:
  * @property-read Finder $finder
@@ -76,9 +75,6 @@ class User extends ActiveRecord implements IdentityInterface
 
     /** @var string Plain password. Used for model validation. */
     public $password;
-
-    /** @var Profile|null */
-    private $_profile;
 
     /** @var string Default username regexp */
     public static $usernameRegexp = '/^[-a-zA-Z0-9_\.@]+$/';
@@ -125,23 +121,7 @@ class User extends ActiveRecord implements IdentityInterface
         return
             (\Yii::$app->getAuthManager() && $this->module->adminPermission ?
                 \Yii::$app->authManager->checkAccess($this->id, $this->module->adminPermission) : false)
-            || in_array($this->username, $this->module->admins);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProfile()
-    {
-        return $this->hasOne($this->module->modelMap['Profile'], ['user_id' => 'id']);
-    }
-
-    /**
-     * @param Profile $profile
-     */
-    public function setProfile(Profile $profile)
-    {
-        $this->_profile = $profile;
+            || in_array($this->email, $this->module->admins);
     }
 
     /**
@@ -542,12 +522,6 @@ class User extends ActiveRecord implements IdentityInterface
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
-        if ($insert) {
-            if ($this->_profile == null) {
-                $this->_profile = \Yii::createObject(Profile::className());
-            }
-            $this->_profile->link('user', $this);
-        }
     }
 
     /** @inheritdoc */

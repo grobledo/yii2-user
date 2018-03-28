@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Dektrium project.
+ * This file is part of the grobledo project.
  *
- * (c) Dektrium project <http://github.com/dektrium>
+ * (c) grobledo project <http://github.com/grobledo>
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -34,9 +34,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'enableClientValidation' => false,
                 ]); ?>
 
-                <?= $form->field($model, 'email') ?>
+                <?= $form->field($model, 'firstname') ?>
 
-                <?= $form->field($model, 'username') ?>
+                <?= $form->field($model, 'lastname') ?>
+
+                <?= $form->field($model, 'email') ?>
 
                 <?php if ($module->enableGeneratingPassword == false): ?>
                     <?= $form->field($model, 'password')->passwordInput() ?>

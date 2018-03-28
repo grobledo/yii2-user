@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Dektrium project.
+ * This file is part of the grobledo project.
  *
- * (c) Dektrium project <http://github.com/dektrium>
+ * (c) grobledo project <http://github.com/grobledo>
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -23,8 +23,6 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('user', 'Users'), 'url' => [
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $this->render('/_alert', ['module' => Yii::$app->getModule('user'),]) ?>
-
 <?= $this->render('_menu') ?>
 
 <div class="row">
@@ -37,10 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'items' => [
                         ['label' => Yii::t('user', 'Account details'), 'url' => ['/user/admin/create']],
-                        ['label' => Yii::t('user', 'Profile details'), 'options' => [
-                            'class' => 'disabled',
-                            'onclick' => 'return false;',
-                        ]],
                         ['label' => Yii::t('user', 'Information'), 'options' => [
                             'class' => 'disabled',
                             'onclick' => 'return false;',

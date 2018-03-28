@@ -5,9 +5,9 @@
     "type": "yii2-extension",
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/dektrium/yii2-user/issues?state=open",
-        "forum": "https://gitter.im/dektrium/yii2-user",
-        "source": "https://github.com/dektrium/yii2-user"
+        "issues": "https://github.com/grobledo/yii2-user/issues?state=open",
+        "forum": "https://gitter.im/grobledo/yii2-user",
+        "source": "https://github.com/grobledo/yii2-user"
     },
     "authors": [
         {

@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Dektrium project.
+ * This file is part of the grobledo project.
  *
- * (c) Dektrium project <http://github.com/dektrium/>
+ * (c) grobledo project <http://github.com/grobledo/>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -35,18 +35,6 @@ class SettingsController extends Controller
 {
     use AjaxValidationTrait;
     use EventTrait;
-
-    /**
-     * Event is triggered before updating user's profile.
-     * Triggered with \grobledo\user\events\UserEvent.
-     */
-    const EVENT_BEFORE_PROFILE_UPDATE = 'beforeProfileUpdate';
-
-    /**
-     * Event is triggered after updating user's profile.
-     * Triggered with \grobledo\user\events\UserEvent.
-     */
-    const EVENT_AFTER_PROFILE_UPDATE = 'afterProfileUpdate';
 
     /**
      * Event is triggered before updating user's account settings.
@@ -96,9 +84,6 @@ class SettingsController extends Controller
      */
     const EVENT_AFTER_DELETE = 'afterDelete';
 
-    /** @inheritdoc */
-    public $defaultAction = 'profile';
-
     /** @var Finder */
     protected $finder;
 
@@ -130,7 +115,7 @@ class SettingsController extends Controller
                 'rules' => [
                     [
                         'allow'   => true,
-                        'actions' => ['profile', 'account', 'networks', 'disconnect', 'delete'],
+                        'actions' => ['account', 'networks', 'disconnect', 'delete'],
                         'roles'   => ['@'],
                     ],
                     [
@@ -141,36 +126,6 @@ class SettingsController extends Controller
                 ],
             ],
         ];
-    }
-
-    /**
-     * Shows profile settings form.
-     *
-     * @return string|\yii\web\Response
-     */
-    public function actionProfile()
-    {
-        $model = $this->finder->findProfileById(\Yii::$app->user->identity->getId());
-
-        if ($model == null) {
-            $model = \Yii::createObject(Profile::className());
-            $model->link('user', \Yii::$app->user->identity);
-        }
-
-        $event = $this->getProfileEvent($model);
-
-        $this->performAjaxValidation($model);
-
-        $this->trigger(self::EVENT_BEFORE_PROFILE_UPDATE, $event);
-        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            \Yii::$app->getSession()->setFlash('success', \Yii::t('user', 'Your profile has been updated'));
-            $this->trigger(self::EVENT_AFTER_PROFILE_UPDATE, $event);
-            return $this->refresh();
-        }
-
-        return $this->render('profile', [
-            'model' => $model,
-        ]);
     }
 
     /**
