@@ -34,7 +34,7 @@ class CreateController extends Controller
      * @param string      $username Username
      * @param null|string $password Password (if null it will be generated automatically)
      */
-    public function actionIndex($email, $firstname, $lastname, $password = null)
+    public function actionIndex($firstname, $lastname, $email, $password = null, $role)
     {
         $user = Yii::createObject([
             'class'    => User::className(),
@@ -45,7 +45,16 @@ class CreateController extends Controller
             'password' => $password,
         ]);
 
+        $auth = Yii::$app->getAuthManager();
+        $user_role = $auth->getRole($role);
+
+        if ($user_role == null){
+            $this->stdout(Yii::t('user', 'Role not found: ' . $role) . "\n", Console::FG_RED);
+            return;
+        }
+
         if ($user->create()) {
+            $auth->assign($user_role, $user->id);
             $this->stdout(Yii::t('user', 'User has been created') . "!\n", Console::FG_GREEN);
         } else {
             $this->stdout(Yii::t('user', 'Please fix following errors:') . "\n", Console::FG_RED);
