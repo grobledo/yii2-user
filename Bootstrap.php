@@ -27,15 +27,15 @@ class Bootstrap implements BootstrapInterface
 {
     /** @var array Model's map */
     private $_modelMap = [
-        'User'             => 'grobledo\user\models\User',
-        'Account'          => 'grobledo\user\models\Account',
-        'Token'            => 'grobledo\user\models\Token',
+        'User' => 'grobledo\user\models\User',
+        'Account' => 'grobledo\user\models\Account',
+        'Token' => 'grobledo\user\models\Token',
         'RegistrationForm' => 'grobledo\user\models\RegistrationForm',
-        'ResendForm'       => 'grobledo\user\models\ResendForm',
-        'LoginForm'        => 'grobledo\user\models\LoginForm',
-        'SettingsForm'     => 'grobledo\user\models\SettingsForm',
-        'RecoveryForm'     => 'grobledo\user\models\RecoveryForm',
-        'UserSearch'       => 'grobledo\user\models\UserSearch',
+        'ResendForm' => 'grobledo\user\models\ResendForm',
+        'LoginForm' => 'grobledo\user\models\LoginForm',
+        'SettingsForm' => 'grobledo\user\models\SettingsForm',
+        'RecoveryForm' => 'grobledo\user\models\RecoveryForm',
+        'UserSearch' => 'grobledo\user\models\UserSearch',
     ];
 
     /** @inheritdoc */
@@ -50,7 +50,7 @@ class Bootstrap implements BootstrapInterface
                 Yii::$container->set($class, $definition);
                 $modelName = is_array($definition) ? $definition['class'] : $definition;
                 $module->modelMap[$name] = $modelName;
-                if (in_array($name, ['User', 'Profile', 'Token', 'Account'])) {
+                if (in_array($name, ['User', 'Token', 'Account'])) {
                     Yii::$container->set($name . 'Query', function () use ($modelName) {
                         return $modelName::find();
                     });
@@ -58,8 +58,8 @@ class Bootstrap implements BootstrapInterface
             }
 
             Yii::$container->setSingleton(Finder::className(), [
-                'userQuery'    => Yii::$container->get('UserQuery'),
-                'tokenQuery'   => Yii::$container->get('TokenQuery'),
+                'userQuery' => Yii::$container->get('UserQuery'),
+                'tokenQuery' => Yii::$container->get('TokenQuery'),
                 'accountQuery' => Yii::$container->get('AccountQuery'),
             ]);
 
@@ -74,7 +74,7 @@ class Bootstrap implements BootstrapInterface
 
                 $configUrlRule = [
                     'prefix' => $module->urlPrefix,
-                    'rules'  => $module->urlRules,
+                    'rules' => $module->urlRules,
                 ];
 
                 if ($module->urlPrefix != 'user') {
@@ -91,6 +91,14 @@ class Bootstrap implements BootstrapInterface
                         'class' => Collection::className(),
                     ]);
                 }
+
+                $app->urlManager->addRules([
+                    'login' => '/user/security/login',
+                    'logout' => '/user/security/logout',
+
+                    'forgot' => '/user/recovery/request',
+                    'account' => '/user/settings/account'
+                ], true);
             }
 
             if (!isset($app->get('i18n')->translations['user*'])) {

@@ -43,11 +43,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'enableClientValidation' => false,
                 ]); ?>
 
-                <?= $form->field($model, 'email') ?>
-
                 <?= $form->field($model, 'firstname') ?>
 
                 <?= $form->field($model, 'lastname') ?>
+
+                <?= $form->field($model, 'email') ?>
 
                 <?= $form->field($model, 'new_password')->passwordInput() ?>
 

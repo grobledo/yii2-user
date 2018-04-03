@@ -164,9 +164,6 @@ class AdminController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'ruleConfig' => [
-                    'class' => AccessRule::className(),
-                ],
                 'rules' => [
                     [
                         'allow' => true,
@@ -175,7 +172,7 @@ class AdminController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['admin'],
+                        'roles' => ['superadmin'],
                     ],
                 ],
             ],

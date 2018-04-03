@@ -28,6 +28,7 @@ use yii\helpers\ArrayHelper;
  * User ActiveRecord model.
  *
  * @property bool    $isAdmin
+ * @property bool    $isSuperadmin
  * @property bool    $isBlocked
  * @property bool    $isConfirmed
  *
@@ -118,10 +119,15 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getIsAdmin()
     {
-        return
-            (\Yii::$app->getAuthManager() && $this->module->adminPermission ?
-                \Yii::$app->authManager->checkAccess($this->id, $this->module->adminPermission) : false)
-            || in_array($this->email, $this->module->admins);
+        return \Yii::$app->authManager->checkAccess($this->id, "admin");
+    }
+
+    /**
+     * @return bool Whether the user is an admin or not.
+     */
+    public function getIsSuperadmin()
+    {
+        return \Yii::$app->authManager->checkAccess($this->id, "superadmin");
     }
 
     /**
@@ -540,5 +546,10 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null)
     {
         throw new NotSupportedException('Method "' . __CLASS__ . '::' . __METHOD__ . '" is not implemented.');
+    }
+
+    public function getRoles(){
+        $assignedItems = \Yii::$app->authManager->getAssignments($this->id);
+        return implode(', ', array_keys($assignedItems));
     }
 }

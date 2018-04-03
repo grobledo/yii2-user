@@ -42,15 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'firstname',
         'lastname',
         'email:email',
-        [
-            'attribute' => 'registration_ip',
-            'value' => function ($model) {
-                return $model->registration_ip == null
-                    ? '<span class="not-set">' . Yii::t('user', '(not set)') . '</span>'
-                    : $model->registration_ip;
-            },
-            'format' => 'html',
-        ],
+        'roles',
         [
             'attribute' => 'created_at',
             'value' => function ($model) {
@@ -132,7 +124,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]);
                     }
                 }
-            ]
+            ],
+            'headerOptions' => ['style' => 'width:90px'],
         ],
     ],
 ]); ?>
