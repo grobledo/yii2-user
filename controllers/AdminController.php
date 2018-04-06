@@ -15,7 +15,6 @@ use grobledo\user\filters\AccessRule;
 use grobledo\user\Finder;
 use grobledo\user\models\User;
 use grobledo\user\models\UserSearch;
-use grobledo\user\helpers\Password;
 use grobledo\user\Module;
 use grobledo\user\traits\EventTrait;
 use yii;
@@ -26,8 +25,8 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
@@ -172,7 +171,7 @@ class AdminController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['superadmin'],
+                        'roles' => ['superadmin', 'admin'],
                     ],
                 ],
             ],
@@ -236,6 +235,11 @@ class AdminController extends Controller
     {
         Url::remember('', 'actions-redirect');
         $user = $this->findModel($id);
+
+        if($user->isSuperadmin && !Yii::$app->user->identity->isSuperadmin){
+            throw new ForbiddenHttpException(Yii::t('user', 'Only Superadmins can update Superadmins'));
+        }
+
         $user->scenario = 'update';
         $event = $this->getUserEvent($user);
 

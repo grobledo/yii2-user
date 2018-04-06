@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'firstname',
         'lastname',
         'email:email',
-        'roles',
+        'role',
         [
             'attribute' => 'created_at',
             'value' => function ($model) {

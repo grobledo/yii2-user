@@ -76,6 +76,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /** @var string Plain password. Used for model validation. */
     public $password;
+    public $new_role;
 
     /** @var string Default username regexp */
     public static $usernameRegexp = '/^[-a-zA-Z0-9_\.@]+$/';
@@ -175,8 +176,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'username'          => \Yii::t('app', 'Username'),
-            'firstname'          => \Yii::t('app', 'Fistname'),
+            'firstname'          => \Yii::t('app', 'Firstname'),
             'lastname'          => \Yii::t('app', 'Lastname'),
             'email'             => \Yii::t('app', 'Email'),
             'registration_ip'   => \Yii::t('app', 'Registration ip'),
@@ -201,11 +201,11 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $scenarios = parent::scenarios();
         return ArrayHelper::merge($scenarios, [
-            'register' => ['username', 'email', 'password'],
-            'connect'  => ['username', 'email'],
-            'create'   => ['username', 'email', 'password'],
-            'update'   => ['username', 'email', 'password'],
-            'settings' => ['username', 'email', 'password'],
+            'register' => ['firstname', 'lastname', 'email', 'password'],
+            'connect'  => ['firstname', 'lastname', 'email'],
+            'create'   => ['firstname', 'lastname', 'email', 'password'],
+            'update'   => ['firstname', 'lastname', 'email', 'password'],
+            'settings' => ['firstname', 'lastname', 'email', 'password'],
         ]);
     }
 
@@ -237,7 +237,25 @@ class User extends ActiveRecord implements IdentityInterface
             // password rules
             'passwordRequired' => ['password', 'required', 'on' => ['register']],
             'passwordLength'   => ['password', 'string', 'min' => 6, 'max' => 72, 'on' => ['register', 'create']],
+
+            // role
+            'roleRequired' => ['role', 'required', 'on' => ['update']],
+            'roleOnlyOne' => ['role', 'validateRole', 'on' => ['update']]
         ];
+    }
+
+    /** @inheritdoc */
+    public function validateRole($attribute, $params)
+    {
+        if (\Yii::$app->authManager->getRole($this->new_role) == null){
+            $this->addError("role", \Yii::t('user', "Role {0} doesn't exist", $this->new_role));
+            return;
+        }
+        if ($this->isSuperadmin && $this->new_role != "superadmin"){
+            $this->addError("role", \Yii::t('user', "Superadmin role can't be changed"));
+        } else if($this->new_role == "superadmin"){
+            $this->addError("role", \Yii::t('user', "Superadmin role can't be assigned"));
+        }
     }
 
     /** @inheritdoc */
@@ -521,6 +539,12 @@ class User extends ActiveRecord implements IdentityInterface
             $this->setAttribute('password_hash', Password::hash($this->password));
         }
 
+        if($this->new_role != $this->role){
+            $role = \Yii::$app->authManager->getRole($this->new_role);
+            \Yii::$app->authManager->revokeAll($this->id);
+            \Yii::$app->authManager->assign($role, $this->id);
+        }
+
         return parent::beforeSave($insert);
     }
 
@@ -548,8 +572,13 @@ class User extends ActiveRecord implements IdentityInterface
         throw new NotSupportedException('Method "' . __CLASS__ . '::' . __METHOD__ . '" is not implemented.');
     }
 
-    public function getRoles(){
-        $assignedItems = \Yii::$app->authManager->getAssignments($this->id);
-        return implode(', ', array_keys($assignedItems));
+    public function getRole(){
+        $assignedItems = \Yii::$app->authManager->getRolesByUser($this->id);
+        return array_keys($assignedItems)[0];
     }
+
+    public function setRole($role){
+        $this->new_role = $role;
+    }
+
 }

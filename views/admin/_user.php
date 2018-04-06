@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+use grobledo\user\helpers\RoleUtils;
+
 /**
  * @var yii\widgets\ActiveForm $form
  * @var grobledo\user\models\User $user
@@ -19,3 +21,10 @@
 <?= $form->field($user, 'lastname')->textInput(['maxlength' => 255]) ?>
 <?= $form->field($user, 'email')->textInput(['maxlength' => 255]) ?>
 <?= $form->field($user, 'password')->passwordInput() ?>
+<?php
+    if ($user->isSuperadmin){
+        echo $form->field($user, 'role')->textInput(['readonly' => 'readonly']);
+    } else {
+        echo $form->field($user, 'role')->dropDownList(RoleUtils::getRoles(), ['prompt' => \Yii::t('app', 'Select...')]);
+    }
+?>

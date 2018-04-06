@@ -19,10 +19,6 @@
 
 <table class="table">
     <tr>
-        <td><strong><?= Yii::t('user', 'Roles') ?>:</strong></td>
-        <td><?= $user->roles ?></td>
-    </tr>
-    <tr>
         <td><strong><?= Yii::t('user', 'Registration time') ?>:</strong></td>
         <td><?= Yii::t('user', '{0, date, MMMM dd, YYYY HH:mm}', [$user->created_at]) ?></td>
     </tr>
