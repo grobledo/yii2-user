@@ -25,6 +25,6 @@ use grobledo\user\helpers\RoleUtils;
     if ($user->isSuperadmin){
         echo $form->field($user, 'role')->textInput(['readonly' => 'readonly']);
     } else {
-        echo $form->field($user, 'role')->dropDownList(RoleUtils::getRoles(), ['prompt' => \Yii::t('app', 'Select...')]);
+        echo $form->field($user, 'new_role')->dropDownList(RoleUtils::getRoles(), ['value'=>$user->role, 'prompt' => \Yii::t('app', 'Select...')]);
     }
 ?>

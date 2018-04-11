@@ -25,7 +25,10 @@ class UserSearch extends Model
     public $id;
 
     /** @var string */
-    public $username;
+    public $firstname;
+
+    /** @var string */
+    public $lastname;
 
     /** @var string */
     public $email;
@@ -56,7 +59,7 @@ class UserSearch extends Model
     public function rules()
     {
         return [
-            'fieldsSafe' => [['id', 'username', 'email', 'registration_ip', 'created_at', 'last_login_at'], 'safe'],
+            'fieldsSafe' => [['id', 'email', 'firstname', 'lastname', 'registration_ip', 'created_at', 'last_login_at'], 'safe'],
             'createdDefault' => ['created_at', 'default', 'value' => null],
             'lastloginDefault' => ['last_login_at', 'default', 'value' => null],
         ];
@@ -67,8 +70,9 @@ class UserSearch extends Model
     {
         return [
             'id'              => Yii::t('user', '#'),
-            'username'        => Yii::t('user', 'Username'),
             'email'           => Yii::t('user', 'Email'),
+            'firstname'           => Yii::t('user', 'firstname'),
+            'lastname'           => Yii::t('user', 'lastname'),
             'created_at'      => Yii::t('user', 'Registration time'),
             'last_login_at'   => Yii::t('user', 'Last login'),
             'registration_ip' => Yii::t('user', 'Registration ip'),
@@ -101,10 +105,11 @@ class UserSearch extends Model
             $query->andFilterWhere(['between', $table_name . '.created_at', $date, $date + 3600 * 24]);
         }
 
-        $query->andFilterWhere(['like', $table_name . '.username', $this->username])
-              ->andFilterWhere(['like', $table_name . '.email', $this->email])
-              ->andFilterWhere([$table_name . '.id' => $this->id])
-              ->andFilterWhere([$table_name . 'registration_ip' => $this->registration_ip]);
+        $query->andFilterWhere(['like', $table_name . '.firstname', $this->firstname])
+            ->andFilterWhere(['like', $table_name . '.lastname', $this->lastname])
+            ->andFilterWhere(['like', $table_name . '.email', $this->role])
+            ->andFilterWhere([$table_name . '.id' => $this->id])
+            ->andFilterWhere([$table_name . 'registration_ip' => $this->registration_ip]);
 
         return $dataProvider;
     }

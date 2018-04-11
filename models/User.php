@@ -19,29 +19,28 @@ use grobledo\user\traits\ModuleTrait;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\Application as WebApplication;
 use yii\web\IdentityInterface;
-use yii\helpers\ArrayHelper;
 
 
 /**
  * User ActiveRecord model.
  *
- * @property bool    $isAdmin
- * @property bool    $isSuperadmin
- * @property bool    $isBlocked
- * @property bool    $isConfirmed
+ * @property bool $isAdmin
+ * @property bool $isSuperadmin
+ * @property bool $isBlocked
+ * @property bool $isConfirmed
  *
  * Database fields:
  * @property integer $id
- * @property string  $firstname
- * @property string  $lastname
- * @property string  $username
- * @property string  $email
- * @property string  $unconfirmed_email
- * @property string  $password_hash
- * @property string  $auth_key
- * @property string  $registration_ip
+ * @property string $firstname
+ * @property string $lastname
+ * @property string $email
+ * @property string $unconfirmed_email
+ * @property string $password_hash
+ * @property string $auth_key
+ * @property string $registration_ip
  * @property integer $confirmed_at
  * @property integer $blocked_at
  * @property integer $created_at
@@ -63,12 +62,12 @@ class User extends ActiveRecord implements IdentityInterface
 {
     use ModuleTrait;
 
-    const BEFORE_CREATE   = 'beforeCreate';
-    const AFTER_CREATE    = 'afterCreate';
+    const BEFORE_CREATE = 'beforeCreate';
+    const AFTER_CREATE = 'afterCreate';
     const BEFORE_REGISTER = 'beforeRegister';
-    const AFTER_REGISTER  = 'afterRegister';
-    const BEFORE_CONFIRM  = 'beforeConfirm';
-    const AFTER_CONFIRM   = 'afterConfirm';
+    const AFTER_REGISTER = 'afterRegister';
+    const BEFORE_CONFIRM = 'beforeConfirm';
+    const AFTER_CONFIRM = 'afterConfirm';
 
     // following constants are used on secured email changing process
     const OLD_EMAIL_CONFIRMED = 0b1;
@@ -137,7 +136,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function getAccounts()
     {
         $connected = [];
-        $accounts  = $this->hasMany($this->module->modelMap['Account'], ['user_id' => 'id'])->all();
+        $accounts = $this->hasMany($this->module->modelMap['Account'], ['user_id' => 'id'])->all();
 
         /** @var Account $account */
         foreach ($accounts as $account) {
@@ -176,15 +175,17 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'firstname'          => \Yii::t('app', 'Firstname'),
-            'lastname'          => \Yii::t('app', 'Lastname'),
-            'email'             => \Yii::t('app', 'Email'),
-            'registration_ip'   => \Yii::t('app', 'Registration ip'),
+            'firstname' => \Yii::t('app', 'Firstname'),
+            'lastname' => \Yii::t('app', 'Lastname'),
+            'email' => \Yii::t('app', 'Email'),
+            'registration_ip' => \Yii::t('app', 'Registration ip'),
             'unconfirmed_email' => \Yii::t('app', 'New email'),
-            'password'          => \Yii::t('app', 'Password'),
-            'created_at'        => \Yii::t('app', 'Registration time'),
-            'last_login_at'     => \Yii::t('app', 'Last login'),
-            'confirmed_at'      => \Yii::t('app', 'Confirmation time'),
+            'password' => \Yii::t('app', 'Password'),
+            'created_at' => \Yii::t('app', 'Registration time'),
+            'last_login_at' => \Yii::t('app', 'Last login'),
+            'confirmed_at' => \Yii::t('app', 'Confirmation time'),
+            'new_role' => \Yii::t('app', 'Role'),
+            'role' => \Yii::t('app', 'Role'),
         ];
     }
 
@@ -202,9 +203,9 @@ class User extends ActiveRecord implements IdentityInterface
         $scenarios = parent::scenarios();
         return ArrayHelper::merge($scenarios, [
             'register' => ['firstname', 'lastname', 'email', 'password'],
-            'connect'  => ['firstname', 'lastname', 'email'],
-            'create'   => ['firstname', 'lastname', 'email', 'password'],
-            'update'   => ['firstname', 'lastname', 'email', 'password'],
+            'connect' => ['firstname', 'lastname', 'email'],
+            'create' => ['firstname', 'lastname', 'email', 'password'],
+            'update' => ['firstname', 'lastname', 'email', 'password'],
             'settings' => ['firstname', 'lastname', 'email', 'password'],
         ]);
     }
@@ -214,21 +215,21 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             // firstname rules
-            'firstnameTrim'     => ['firstname', 'trim'],
+            'firstnameTrim' => ['firstname', 'trim'],
             'firstnameRequired' => ['firstname', 'required', 'on' => ['register', 'create', 'connect', 'update']],
-            'firstnameLength'   => ['firstname', 'string', 'min' => 3, 'max' => 255],
+            'firstnameLength' => ['firstname', 'string', 'min' => 3, 'max' => 255],
 
             // lastname rules
-            'lastnameTrim'     => ['lastname', 'trim'],
+            'lastnameTrim' => ['lastname', 'trim'],
             'lastnameRequired' => ['lastname', 'required', 'on' => ['register', 'create', 'connect', 'update']],
-            'lastnameLength'   => ['lastname', 'string', 'min' => 3, 'max' => 255],
+            'lastnameLength' => ['lastname', 'string', 'min' => 3, 'max' => 255],
 
             // email rules
-            'emailTrim'     => ['email', 'trim'],
+            'emailTrim' => ['email', 'trim'],
             'emailRequired' => ['email', 'required', 'on' => ['register', 'connect', 'create', 'update']],
-            'emailPattern'  => ['email', 'email'],
-            'emailLength'   => ['email', 'string', 'max' => 255],
-            'emailUnique'   => [
+            'emailPattern' => ['email', 'email'],
+            'emailLength' => ['email', 'string', 'max' => 255],
+            'emailUnique' => [
                 'email',
                 'unique',
                 'message' => \Yii::t('user', 'This email address has already been taken')
@@ -236,24 +237,24 @@ class User extends ActiveRecord implements IdentityInterface
 
             // password rules
             'passwordRequired' => ['password', 'required', 'on' => ['register']],
-            'passwordLength'   => ['password', 'string', 'min' => 6, 'max' => 72, 'on' => ['register', 'create']],
+            'passwordLength' => ['password', 'string', 'min' => 6, 'max' => 72, 'on' => ['register', 'create']],
 
             // role
-            'roleRequired' => ['role', 'required', 'on' => ['update']],
-            'roleOnlyOne' => ['role', 'validateRole', 'on' => ['update']]
+            'roleRequired' => ['new_role', 'required', 'on' => ['update']],
+            'roleOnlyOne' => ['new_role', 'validateRole', 'on' => ['update']]
         ];
     }
 
     /** @inheritdoc */
     public function validateRole($attribute, $params)
     {
-        if (\Yii::$app->authManager->getRole($this->new_role) == null){
+        if (\Yii::$app->authManager->getRole($this->new_role) == null) {
             $this->addError("role", \Yii::t('user', "Role {0} doesn't exist", $this->new_role));
             return;
         }
-        if ($this->isSuperadmin && $this->new_role != "superadmin"){
+        if ($this->isSuperadmin && $this->new_role != "superadmin") {
             $this->addError("role", \Yii::t('user', "Superadmin role can't be changed"));
-        } else if($this->new_role == "superadmin"){
+        } else if ($this->new_role == "superadmin") {
             $this->addError("role", \Yii::t('user', "Superadmin role can't be assigned"));
         }
     }
@@ -318,7 +319,7 @@ class User extends ActiveRecord implements IdentityInterface
 
         try {
             $this->confirmed_at = $this->module->enableConfirmation ? null : time();
-            $this->password     = $this->module->enableGeneratingPassword ? Password::generate(8) : $this->password;
+            $this->password = $this->module->enableGeneratingPassword ? Password::generate(8) : $this->password;
 
             $this->trigger(self::BEFORE_REGISTER);
 
@@ -407,7 +408,7 @@ class User extends ActiveRecord implements IdentityInterface
         /** @var Token $token */
         $token = $this->finder->findToken([
             'user_id' => $this->id,
-            'code'    => $code,
+            'code' => $code,
         ])->andWhere(['in', 'type', [Token::TYPE_CONFIRM_NEW_EMAIL, Token::TYPE_CONFIRM_OLD_EMAIL]])->one();
 
         if (empty($this->unconfirmed_email) || $token === null || $token->isExpired) {
@@ -459,7 +460,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function confirm()
     {
         $this->trigger(self::BEFORE_CONFIRM);
-        $result = (bool) $this->updateAttributes(['confirmed_at' => time()]);
+        $result = (bool)$this->updateAttributes(['confirmed_at' => time()]);
         $this->trigger(self::AFTER_CONFIRM);
         return $result;
     }
@@ -483,7 +484,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return (bool)$this->updateAttributes([
             'blocked_at' => time(),
-            'auth_key'   => \Yii::$app->security->generateRandomString(),
+            'auth_key' => \Yii::$app->security->generateRandomString(),
         ]);
     }
 
@@ -528,6 +529,13 @@ class User extends ActiveRecord implements IdentityInterface
     /** @inheritdoc */
     public function beforeSave($insert)
     {
+        if ($this->new_role != $this->role) {
+            $role = \Yii::$app->authManager->getRole($this->new_role);
+            if ($role == null){
+                throw new \Exception("Role doesn't exist: " . $role);
+            }
+        }
+
         if ($insert) {
             $this->setAttribute('auth_key', \Yii::$app->security->generateRandomString());
             if (\Yii::$app instanceof WebApplication) {
@@ -539,18 +547,18 @@ class User extends ActiveRecord implements IdentityInterface
             $this->setAttribute('password_hash', Password::hash($this->password));
         }
 
-        if($this->new_role != $this->role){
-            $role = \Yii::$app->authManager->getRole($this->new_role);
-            \Yii::$app->authManager->revokeAll($this->id);
-            \Yii::$app->authManager->assign($role, $this->id);
-        }
-
         return parent::beforeSave($insert);
     }
 
     /** @inheritdoc */
     public function afterSave($insert, $changedAttributes)
     {
+        if ($this->new_role != $this->role) {
+            $role = \Yii::$app->authManager->getRole($this->new_role);
+            \Yii::$app->authManager->revokeAll($this->id);
+            \Yii::$app->authManager->assign($role, $this->id);
+        }
+
         parent::afterSave($insert, $changedAttributes);
     }
 
@@ -572,12 +580,18 @@ class User extends ActiveRecord implements IdentityInterface
         throw new NotSupportedException('Method "' . __CLASS__ . '::' . __METHOD__ . '" is not implemented.');
     }
 
-    public function getRole(){
-        $assignedItems = \Yii::$app->authManager->getRolesByUser($this->id);
-        return array_keys($assignedItems)[0];
+    public function getRole()
+    {
+        $assignedItems = array_keys(\Yii::$app->authManager->getRolesByUser($this->id));
+        if (!empty($assignedItems)){
+            return $assignedItems[0];
+        } else {
+            return null;
+        }
     }
 
-    public function setRole($role){
+    public function setRole($role)
+    {
         $this->new_role = $role;
     }
 

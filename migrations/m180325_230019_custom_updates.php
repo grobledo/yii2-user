@@ -25,10 +25,14 @@ class m180325_230019_custom_updates extends Migration
 
         /* ROLES */
         $auth = Yii::$app->getAuthManager();
+
         $superadmin = $auth->createRole('superadmin');
         $auth->add($superadmin);
+
         $admin = $auth->createRole('admin');
         $auth->add($admin);
+
+        $auth->addChild($superadmin, $admin);
     }
 
     /**
