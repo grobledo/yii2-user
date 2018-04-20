@@ -175,17 +175,17 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'firstname' => \Yii::t('app', 'Firstname'),
-            'lastname' => \Yii::t('app', 'Lastname'),
-            'email' => \Yii::t('app', 'Email'),
-            'registration_ip' => \Yii::t('app', 'Registration ip'),
-            'unconfirmed_email' => \Yii::t('app', 'New email'),
-            'password' => \Yii::t('app', 'Password'),
-            'created_at' => \Yii::t('app', 'Registration time'),
-            'last_login_at' => \Yii::t('app', 'Last login'),
-            'confirmed_at' => \Yii::t('app', 'Confirmation time'),
-            'new_role' => \Yii::t('app', 'Role'),
-            'role' => \Yii::t('app', 'Role'),
+            'firstname' => \Yii::t('user', 'Firstname'),
+            'lastname' => \Yii::t('user', 'Lastname'),
+            'email' => \Yii::t('user', 'Email'),
+            'registration_ip' => \Yii::t('user', 'Registration ip'),
+            'unconfirmed_email' => \Yii::t('user', 'New email'),
+            'password' => \Yii::t('user', 'Password'),
+            'created_at' => \Yii::t('user', 'Registration time'),
+            'last_login_at' => \Yii::t('user', 'Last login'),
+            'confirmed_at' => \Yii::t('user', 'Confirmation time'),
+            'new_role' => \Yii::t('user', 'Role'),
+            'role' => \Yii::t('user', 'Role'),
         ];
     }
 

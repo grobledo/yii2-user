@@ -18,6 +18,9 @@
  */
 return array (
   '#' => '',
+  'Firstname' => 'Nombre',
+  'Lastname' => 'Apellido',
+  'Role' => 'Rol',
   'Are you sure?' => '',
   'Are you sure? There is no going back' => '',
   'Delete account' => '',
