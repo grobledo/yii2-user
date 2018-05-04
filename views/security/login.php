@@ -21,7 +21,6 @@ use yii\widgets\ActiveForm;
  */
 
 $this->title = Yii::t('user', 'Sign in');
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="row">
