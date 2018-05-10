@@ -529,7 +529,7 @@ class User extends ActiveRecord implements IdentityInterface
     /** @inheritdoc */
     public function beforeSave($insert)
     {
-        if ($this->new_role != $this->role) {
+        if ($this->new_role != null && $this->new_role != $this->role) {
             $role = \Yii::$app->authManager->getRole($this->new_role);
             if ($role == null){
                 throw new \Exception("Role doesn't exist: " . $role);
@@ -553,7 +553,7 @@ class User extends ActiveRecord implements IdentityInterface
     /** @inheritdoc */
     public function afterSave($insert, $changedAttributes)
     {
-        if ($this->new_role != $this->role) {
+        if ($this->new_role != null && $this->new_role != $this->role) {
             $role = \Yii::$app->authManager->getRole($this->new_role);
             \Yii::$app->authManager->revokeAll($this->id);
             \Yii::$app->authManager->assign($role, $this->id);
