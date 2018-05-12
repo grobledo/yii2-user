@@ -29,6 +29,7 @@ use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
+use yii\db\IntegrityException;
 
 /**
  * AdminController allows you to administrate users.
@@ -369,12 +370,16 @@ class AdminController extends Controller
         if ($id == \Yii::$app->user->getId()) {
             \Yii::$app->getSession()->setFlash('danger', \Yii::t('user', 'You can not remove your own account'));
         } else {
-            $model = $this->findModel($id);
-            $event = $this->getUserEvent($model);
-            $this->trigger(self::EVENT_BEFORE_DELETE, $event);
-            $model->delete();
-            $this->trigger(self::EVENT_AFTER_DELETE, $event);
-            \Yii::$app->getSession()->setFlash('success', \Yii::t('user', 'User has been deleted'));
+            try {
+                $model = $this->findModel($id);
+                $event = $this->getUserEvent($model);
+                $this->trigger(self::EVENT_BEFORE_DELETE, $event);
+                $model->delete();
+                $this->trigger(self::EVENT_AFTER_DELETE, $event);
+                \Yii::$app->getSession()->setFlash('success', \Yii::t('user', 'User has been deleted'));
+            } catch(IntegrityException $e) {
+                Yii::$app->getSession()->setFlash('error', Yii::t('app', "Can't delete item"));
+            }
         }
 
         return $this->redirect(['index']);
