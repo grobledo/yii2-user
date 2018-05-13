@@ -35,6 +35,6 @@
         }
     },
     "extra": {
-        "bootstrap": "grobledo\\user\\Bootstrap",
+        "bootstrap": "grobledo\\user\\Bootstrap"
     }
 }
