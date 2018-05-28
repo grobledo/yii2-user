@@ -18,6 +18,9 @@
  */
 return array (
   '#' => '',
+  'Actions' => 'Acciones',
+  'Blocked' => 'Bloqueado',
+  'Active' => 'Activo',
   'Firstname' => 'Nombre',
   'Lastname' => 'Apellido',
   'Role' => 'Rol',
@@ -25,7 +28,7 @@ return array (
   'Are you sure? There is no going back' => '',
   'Delete account' => '',
   'Error while trying to generate new password' => '',
-  'Generate and send new password to user' => '',
+  'Generate and send new password to user' => 'Generar nueva password',
   'Impersonate user is disabled in the application configuration' => '',
   'In order to finish your registration, we need you to enter following fields' => '',
   'It will be deleted forever' => '',
