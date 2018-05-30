@@ -23,7 +23,8 @@ use yii\helpers\Html;
 <?php $form = ActiveForm::begin([
     'layout' => 'horizontal',
     'enableAjaxValidation' => true,
-    'enableClientValidation' => false,
+    'enableClientValidation' => true,
+    'validateOnChange' => false,
     'fieldConfig' => [
         'horizontalCssClasses' => [
             'wrapper' => 'col-sm-9',

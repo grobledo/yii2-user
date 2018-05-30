@@ -42,6 +42,9 @@ class UserSearch extends Model
     /** @var string */
     public $registration_ip;
 
+    /** @var string */
+    public $role;
+
     /** @var Finder */
     protected $finder;
 
@@ -59,7 +62,7 @@ class UserSearch extends Model
     public function rules()
     {
         return [
-            'fieldsSafe' => [['id', 'email', 'firstname', 'lastname', 'registration_ip', 'created_at', 'last_login_at'], 'safe'],
+            'fieldsSafe' => [['id', 'email', 'firstname', 'lastname', 'registration_ip', 'created_at', 'last_login_at', 'role'], 'safe'],
             'createdDefault' => ['created_at', 'default', 'value' => null],
             'lastloginDefault' => ['last_login_at', 'default', 'value' => null],
         ];
@@ -76,6 +79,7 @@ class UserSearch extends Model
             'created_at'      => Yii::t('user', 'Registration time'),
             'last_login_at'   => Yii::t('user', 'Last login'),
             'registration_ip' => Yii::t('user', 'Registration ip'),
+            'registration_ip' => Yii::t('user', 'Role'),
         ];
     }
 
@@ -86,7 +90,7 @@ class UserSearch extends Model
      */
     public function search($params)
     {
-        $query = $this->finder->getUserQuery();
+        $query = $this->finder->getUserQuery()->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -107,9 +111,10 @@ class UserSearch extends Model
 
         $query->andFilterWhere(['like', $table_name . '.firstname', $this->firstname])
             ->andFilterWhere(['like', $table_name . '.lastname', $this->lastname])
-            ->andFilterWhere(['like', $table_name . '.email', $this->role])
+            ->andFilterWhere(['like', $table_name . '.email', $this->email])
             ->andFilterWhere([$table_name . '.id' => $this->id])
-            ->andFilterWhere([$table_name . 'registration_ip' => $this->registration_ip]);
+            ->andFilterWhere([$table_name . 'registration_ip' => $this->registration_ip])
+            ->andFilterWhere(['auth_assignment.item_name' => $this->role]);
 
         return $dataProvider;
     }

@@ -204,8 +204,8 @@ class User extends ActiveRecord implements IdentityInterface
         return ArrayHelper::merge($scenarios, [
             'register' => ['firstname', 'lastname', 'email', 'password'],
             'connect' => ['firstname', 'lastname', 'email'],
-            'create' => ['firstname', 'lastname', 'email', 'password'],
-            'update' => ['firstname', 'lastname', 'email', 'password'],
+            'create' => ['firstname', 'lastname', 'email', 'password', 'new_role'],
+            'update' => ['firstname', 'lastname', 'email', 'password', 'new_role'],
             'settings' => ['firstname', 'lastname', 'email', 'password'],
         ]);
     }
@@ -240,8 +240,8 @@ class User extends ActiveRecord implements IdentityInterface
             'passwordLength' => ['password', 'string', 'min' => 6, 'max' => 72, 'on' => ['register', 'create']],
 
             // role
-            'roleRequired' => ['new_role', 'required', 'on' => ['update']],
-            'roleOnlyOne' => ['new_role', 'validateRole', 'on' => ['update']]
+            'roleRequired' => ['new_role', 'required', 'on' => ['update', 'create']],
+            'roleOnlyOne' => ['new_role', 'validateRole', 'on' => ['update', 'create']]
         ];
     }
 

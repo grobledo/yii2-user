@@ -9,10 +9,12 @@
  * file that was distributed with this source code.
  */
 
-use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
+use grobledo\user\helpers\RoleUtils;
+use yii\helpers\ArrayHelper;
+use kartik\grid\GridView;
 
 
 /**
@@ -41,7 +43,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'firstname',
         'lastname',
         'email',
-        'role',
+        [
+            'attribute' => 'role',
+            'filterType' => GridView::FILTER_SELECT2,
+            'filter' => RoleUtils::getRoles(),
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true],
+            ],
+            'filterInputOptions' => ['placeholder' => ''],
+            'headerOptions' => ['style' => 'min-width:140px'],
+        ],
         [
             'attribute' => 'created_at',
             'format' => 'date'
