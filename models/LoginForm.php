@@ -112,6 +112,7 @@ class LoginForm extends Model
                     'password',
                     function ($attribute) {
                         if ($this->user === null || !Password::validate($this->password, $this->user->password_hash)) {
+                            $this->incFailedLoginsCount();
                             $this->addError($attribute, Yii::t('user', 'Invalid login or password'));
                         }
                     }
@@ -130,8 +131,10 @@ class LoginForm extends Model
      */
     public function validatePassword($attribute, $params)
     {
-      if ($this->user === null || !Password::validate($this->password, $this->user->password_hash))
-        $this->addError($attribute, Yii::t('user', 'Invalid login or password'));
+        if ($this->user === null || !Password::validate($this->password, $this->user->password_hash)){
+            $this->incFailedLoginsCount();
+            $this->addError($attribute, Yii::t('user', 'Invalid login or password'));
+        }
     }
 
     /**
@@ -145,13 +148,26 @@ class LoginForm extends Model
             $isLogged = Yii::$app->getUser()->login($this->user, $this->rememberMe ? $this->module->rememberFor : 0);
 
             if ($isLogged) {
-                $this->user->updateAttributes(['last_login_at' => time()]);
+                $this->user->updateAttributes(['last_login_at' => time(), 'failed_logins' => 0]);
+            } else {
+                $this->incFailedLoginsCount();
             }
 
             return $isLogged;
         }
-
+        
+        $this->incFailedLoginsCount();
         return false;
+    }
+    
+    public function incFailedLoginsCount(){
+        if ($this->user){
+            $this->user->failed_logins = $this->user->failed_logins + 1;
+            $this->user->save(false);
+            if ($this->user->failed_logins >= $this->module->failedLoginAttemps){
+                $this->user->block();
+            }
+        }
     }
 
 

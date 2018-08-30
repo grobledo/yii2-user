@@ -47,6 +47,7 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property integer $last_login_at
  * @property integer $flags
+ * @property integer $failed_logins
  *
  * Defined relations:
  * @property Account[] $accounts
