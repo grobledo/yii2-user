@@ -161,7 +161,7 @@ class LoginForm extends Model
     }
     
     public function incFailedLoginsCount(){
-        if ($this->user){
+        if ($this->user && $this->module->enableFailedAttemps){
             $this->user->failed_logins = $this->user->failed_logins + 1;
             $this->user->save(false);
             if ($this->user->failed_logins >= $this->module->failedLoginAttemps){
@@ -187,5 +187,9 @@ class LoginForm extends Model
         } else {
             return false;
         }
+    }
+    
+    public function getUser(){
+        return $this->user;
     }
 }
